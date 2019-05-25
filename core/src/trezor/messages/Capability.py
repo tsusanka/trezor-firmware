@@ -12,14 +12,15 @@ if not utils.BITCOIN_ONLY:
     Cardano = 4  # type: Literal[4]
 Crypto = 5  # type: Literal[5]
 if not utils.BITCOIN_ONLY:
-    EOS = 6  # type: Literal[6]
-    Ethereum = 7  # type: Literal[7]
-    Lisk = 8  # type: Literal[8]
-    Monero = 9  # type: Literal[9]
-    NEM = 10  # type: Literal[10]
-    Ripple = 11  # type: Literal[11]
-    Stellar = 12  # type: Literal[12]
-    Tezos = 13  # type: Literal[13]
-    U2F = 14  # type: Literal[14]
-Shamir = 15  # type: Literal[15]
-ShamirGroups = 16  # type: Literal[16]
+    EOS = 6
+    Ethereum = 7
+    Lisk = 8
+    Monero = 9
+    NEM = 10
+    Ripple = 11
+    Stellar = 12
+    Tezos = 13
+    U2F = 14
+    Ontology = 17
+Shamir = 15
+ShamirGroups = 16

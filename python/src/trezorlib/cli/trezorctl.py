@@ -274,6 +274,194 @@ cli.add_command(tezos.cli)
 cli.add_command(firmware.firmware_update)
 
 
+# Ontology functions
+#
+
+
+@cli.command(help="Get Ontology address for specified path.")
+@click.option(
+    "-n", "--address", required=True, help="BIP-32 path, e.g. m/44'/888'/0'/0/0"
+)
+@click.option("-d", "--show-display", is_flag=True)
+@click.pass_obj
+def ontology_get_address(connect, address, show_display):
+    client = connect()
+    address_n = tools.parse_path(address)
+    return ontology.get_address(client, address_n, show_display)
+
+
+@cli.command(help="Get Ontology public key for specified path.")
+@click.option(
+    "-n", "--address", required=True, help="BIP-32 path, e.g. m/44'/888'/0'/0/0"
+)
+@click.option("-d", "--show-display", is_flag=True)
+@click.pass_obj
+def ontology_get_public_key(connect, address, show_display):
+    client = connect()
+    address_n = tools.parse_path(address)
+    result = ontology.get_public_key(client, address_n, show_display)
+
+    return result.public_key.hex()
+
+
+@cli.command(help="Sign Ontology transfer.")
+@click.option(
+    "-n",
+    "--address",
+    required=True,
+    help="BIP-32 path to signing key, e.g. m/44'/888'/0'/0/0",
+)
+@click.option(
+    "-tx",
+    "--transaction",
+    type=click.File("r"),
+    default="-",
+    help="Transaction in JSON format",
+)
+@click.option(
+    "-tr",
+    "--transfer",
+    type=click.File("r"),
+    default="-",
+    help="Transfer in JSON format",
+)
+@click.pass_obj
+def ontology_sign_transfer(connect, address, transaction, transfer):
+    client = connect()
+    address_n = tools.parse_path(address)
+    transaction = protobuf.dict_to_proto(
+        proto.OntologyTransaction, json.load(transaction)
+    )
+    transfer = protobuf.dict_to_proto(proto.OntologyTransfer, json.load(transfer))
+
+    result = ontology.sign_transfer(client, address_n, transaction, transfer)
+
+    output = {"payload": result.payload.hex(), "signature": result.signature.hex()}
+
+    return output
+
+
+@cli.command(help="Sign Ontology withdraw Ong.")
+@click.option(
+    "-n",
+    "--address",
+    required=True,
+    help="BIP-32 path to signing key, e.g. m/44'/888'/0'/0/0",
+)
+@click.option(
+    "-tx",
+    "--transaction",
+    type=click.File("r"),
+    default="-",
+    help="Transaction in JSON format",
+)
+@click.option(
+    "-wi",
+    "--withdraw_ong",
+    type=click.File("r"),
+    default="-",
+    help="Withdrawal in JSON format",
+)
+@click.pass_obj
+def ontology_sign_withdraw_ong(connect, address, transaction, withdraw_ong):
+    client = connect()
+    address_n = tools.parse_path(address)
+    transaction = protobuf.dict_to_proto(
+        proto.OntologyTransaction, json.load(transaction)
+    )
+    withdraw_ong = protobuf.dict_to_proto(
+        proto.OntologyWithdrawOng, json.load(withdraw_ong)
+    )
+
+    result = ontology.sign_withdrawal(client, address_n, transaction, withdraw_ong)
+
+    output = {"payload": result.payload.hex(), "signature": result.signature.hex()}
+
+    return output
+
+
+@cli.command(help="Sign Ontology ONT ID Registration.")
+@click.option(
+    "-n",
+    "--address",
+    required=True,
+    help="BIP-32 path to signing key, e.g. m/44'/888'/0'/0/0",
+)
+@click.option(
+    "-tx",
+    "--transaction",
+    type=click.File("r"),
+    default="-",
+    help="Transaction in JSON format",
+)
+@click.option(
+    "-re",
+    "--register",
+    type=click.File("r"),
+    default="-",
+    help="Register in JSON format",
+)
+@click.argument("transaction")
+@click.argument("ont_id_register")
+@click.pass_obj
+def ontology_sign_ont_id_register(connect, address, transaction, register):
+    client = connect()
+    address_n = tools.parse_path(address)
+    transaction = protobuf.dict_to_proto(
+        proto.OntologyTransaction, json.load(transaction)
+    )
+    ont_id_register = protobuf.dict_to_proto(
+        proto.OntologyOntIdRegister, json.load(register)
+    )
+
+    result = ontology.sign_register(client, address_n, transaction, ont_id_register)
+
+    output = {"payload": result.payload.hex(), "signature": result.signature.hex()}
+
+    return output
+
+
+@cli.command(help="Sign Ontology ONT ID Attributes adding.")
+@click.option(
+    "-n",
+    "--address",
+    required=True,
+    help="BIP-32 path to signing key, e.g. m/44'/888'/0'/0/0",
+)
+@click.option(
+    "-tx",
+    "--transaction",
+    type=click.File("r"),
+    required=True,
+    default="-",
+    help="Transaction in JSON format",
+)
+@click.option(
+    "-aa",
+    "--add_attr",
+    type=click.File("r"),
+    required=True,
+    default="-",
+    help="Add attributes in JSON format",
+)
+@click.pass_obj
+def ontology_sign_ont_id_add_attributes(connect, address, transaction, add_attr):
+    client = connect()
+    address_n = tools.parse_path(address)
+    transaction = protobuf.dict_to_proto(
+        proto.OntologyTransaction, json.load(transaction)
+    )
+    ont_id_add_attributes = protobuf.dict_to_proto(
+        proto.OntologyOntIdAddAttributes, json.load(add_attr)
+    )
+    result = ontology.sign_add_attr(
+        client, address_n, transaction, ont_id_add_attributes
+    )
+    output = {"payload": result.payload.hex(), "signature": result.signature.hex()}
+
+    return output
+
+
 #
 # Main
 #
