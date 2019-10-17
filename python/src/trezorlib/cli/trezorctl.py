@@ -312,14 +312,14 @@ def ontology_get_public_key(connect, address, show_display):
     help="BIP-32 path to signing key, e.g. m/44'/888'/0'/0/0",
 )
 @click.option(
-    "-tx",
+    "-t",
     "--transaction",
     type=click.File("r"),
     default="-",
     help="Transaction in JSON format",
 )
 @click.option(
-    "-tr",
+    "-r",
     "--transfer",
     type=click.File("r"),
     default="-",
@@ -349,14 +349,14 @@ def ontology_sign_transfer(connect, address, transaction, transfer):
     help="BIP-32 path to signing key, e.g. m/44'/888'/0'/0/0",
 )
 @click.option(
-    "-tx",
+    "-t",
     "--transaction",
     type=click.File("r"),
     default="-",
     help="Transaction in JSON format",
 )
 @click.option(
-    "-wi",
+    "-w",
     "--withdraw_ong",
     type=click.File("r"),
     default="-",
@@ -388,14 +388,14 @@ def ontology_sign_withdraw_ong(connect, address, transaction, withdraw_ong):
     help="BIP-32 path to signing key, e.g. m/44'/888'/0'/0/0",
 )
 @click.option(
-    "-tx",
+    "-t",
     "--transaction",
     type=click.File("r"),
     default="-",
     help="Transaction in JSON format",
 )
 @click.option(
-    "-re",
+    "-r",
     "--register",
     type=click.File("r"),
     default="-",
@@ -429,7 +429,7 @@ def ontology_sign_ont_id_register(connect, address, transaction, register):
     help="BIP-32 path to signing key, e.g. m/44'/888'/0'/0/0",
 )
 @click.option(
-    "-tx",
+    "-t",
     "--transaction",
     type=click.File("r"),
     required=True,
@@ -437,8 +437,8 @@ def ontology_sign_ont_id_register(connect, address, transaction, register):
     help="Transaction in JSON format",
 )
 @click.option(
-    "-aa",
-    "--add_attr",
+    "-a",
+    "--add_attribute",
     type=click.File("r"),
     required=True,
     default="-",
