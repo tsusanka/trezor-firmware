@@ -80,6 +80,7 @@ do_rebuild() {
         done
         sed -i "/^Bitcoin_like/iif not utils.BITCOIN_ONLY:" "$DESTDIR"/Capability.py
         sed -i "/^EOS/iif not utils.BITCOIN_ONLY:" "$DESTDIR"/Capability.py
+        sed -i "/Ontology/iif not utils.BITCOIN_ONLY:" "$DESTDIR"/Capability.py
         for feature in Bitcoin_like EOS U2F; do
             sed -i "s:^$feature:    $feature:" "$DESTDIR"/Capability.py
         done

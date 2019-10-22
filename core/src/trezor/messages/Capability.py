@@ -21,6 +21,7 @@ if not utils.BITCOIN_ONLY:
     Stellar = 12
     Tezos = 13
     U2F = 14
-    Ontology = 17
 Shamir = 15
 ShamirGroups = 16
+if not utils.BITCOIN_ONLY:
+    Ontology = 17
