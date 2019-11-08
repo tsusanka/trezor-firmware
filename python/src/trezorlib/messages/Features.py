@@ -49,6 +49,7 @@ class Features(p.MessageType):
         backup_type: EnumTypeBackupType = None,
         sd_card_present: bool = None,
         sd_protection: bool = None,
+        session_id: bytes = None,
     ) -> None:
         self.vendor = vendor
         self.major_version = major_version
@@ -82,6 +83,7 @@ class Features(p.MessageType):
         self.backup_type = backup_type
         self.sd_card_present = sd_card_present
         self.sd_protection = sd_protection
+        self.session_id = session_id
 
     @classmethod
     def get_fields(cls) -> Dict:
@@ -118,4 +120,5 @@ class Features(p.MessageType):
             31: ('backup_type', p.EnumType("BackupType", (0, 1, 2)), 0),
             32: ('sd_card_present', p.BoolType, 0),
             33: ('sd_protection', p.BoolType, 0),
+            34: ('session_id', p.BytesType, 0),
         }
