@@ -146,43 +146,43 @@ crypto test:
     - CK_TIMEOUT_MULTIPLIER=20 valgrind -q --error-exitcode=1 ./tests/test_check
 
 
-# Legacy
-
-legacy emu test:
-  stage: test
-  <<: *only_changes_legacy
-  dependencies:
-    - legacy emu regular build
-  variables:
-    EMULATOR: "1"
-  script:
-    - cd legacy
-    - pipenv run script/test
-
-legacy emu btconly test:
-  stage: test
-  <<: *only_changes_legacy
-  dependencies:
-    - legacy emu btconly build
-  variables:
-    EMULATOR: "1"
-    EMULATOR_BINARY: "firmware/trezor-bitcoinonly.elf"
-    TREZOR_PYTEST_SKIP_ALTCOINS: 1
-  script:
-    - cd legacy
-    - pipenv run script/test
-
-legacy emu upgrade test:
-  stage: test
-  <<: *only_changes_legacy
-  dependencies:
-    - legacy emu regular build
-  variables:
-    TREZOR_UPGRADE_TEST: "legacy"
-  script:
-    - tests/download_emulators.sh
-    - pipenv run pytest tests/upgrade_tests
-
+## Legacy
+#
+#legacy emu test:
+#  stage: test
+#  <<: *only_changes_legacy
+#  dependencies:
+#    - legacy emu regular build
+#  variables:
+#    EMULATOR: "1"
+#  script:
+#    - cd legacy
+#    - pipenv run script/test
+#
+#legacy emu btconly test:
+#  stage: test
+#  <<: *only_changes_legacy
+#  dependencies:
+#    - legacy emu btconly build
+#  variables:
+#    EMULATOR: "1"
+#    EMULATOR_BINARY: "firmware/trezor-bitcoinonly.elf"
+#    TREZOR_PYTEST_SKIP_ALTCOINS: 1
+#  script:
+#    - cd legacy
+#    - pipenv run script/test
+#
+#legacy emu upgrade test:
+#  stage: test
+#  <<: *only_changes_legacy
+#  dependencies:
+#    - legacy emu regular build
+#  variables:
+#    TREZOR_UPGRADE_TEST: "legacy"
+#  script:
+#    - tests/download_emulators.sh
+#    - pipenv run pytest tests/upgrade_tests
+#
 
 # Python
 
