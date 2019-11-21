@@ -50,6 +50,7 @@ class Features(p.MessageType):
         sd_card_present: bool = None,
         sd_protection: bool = None,
         session_id: bytes = None,
+        passphrase_always_on_device: bool = None,
     ) -> None:
         self.vendor = vendor
         self.major_version = major_version
@@ -84,6 +85,7 @@ class Features(p.MessageType):
         self.sd_card_present = sd_card_present
         self.sd_protection = sd_protection
         self.session_id = session_id
+        self.passphrase_always_on_device = passphrase_always_on_device
 
     @classmethod
     def get_fields(cls) -> Dict:
@@ -121,4 +123,5 @@ class Features(p.MessageType):
             32: ('sd_card_present', p.BoolType, 0),
             33: ('sd_protection', p.BoolType, 0),
             34: ('session_id', p.BytesType, 0),
+            35: ('passphrase_always_on_device', p.BoolType, 0),
         }

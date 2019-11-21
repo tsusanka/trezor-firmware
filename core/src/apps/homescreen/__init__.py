@@ -73,6 +73,7 @@ def get_features() -> Features:
     f.sd_card_present = io.SDCard().present()
     f.sd_protection = storage.sd_salt.is_enabled()
     f.session_id = cache.get_session_id()
+    f.passphrase_always_on_device = storage.device.get_passphrase_always_on_device()
     return f
 
 
