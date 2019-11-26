@@ -42,6 +42,6 @@ def show_pin_timeout(seconds: int, progress: int, message: str) -> bool:
         )
         _previous_seconds = seconds
 
-    ui.display.refresh()
+    ui.refresh()
     _previous_progress = progress
     return False

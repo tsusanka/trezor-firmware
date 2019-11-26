@@ -39,18 +39,27 @@ _alert_in_progress = False
 
 # in debug mode, display an indicator in top right corner
 if __debug__:
+    import apps.debug
 
-    def debug_display_refresh() -> None:
+    def refresh() -> None:
         display.bar(Display.WIDTH - 8, 0, 8, 8, 0xF800)
         display.refresh()
-        if utils.SAVE_SCREEN:
-            display.save("refresh")
 
-    loop.after_step_hook = debug_display_refresh
+        from trezor import workflow
+
+        if utils.SAVE_SCREEN or (
+            apps.debug.save_screen and workflow.default_task is None
+        ):
+            display.save(apps.debug.save_screen_directory + "/refresh-")
+
+
+else:
+    refresh = display.refresh
+
 
 # in both debug and production, emulator needs to draw the screen explicitly
-elif utils.EMULATOR:
-    loop.after_step_hook = display.refresh
+if utils.EMULATOR:
+    loop.after_step_hook = refresh
 
 
 def lerpi(a: int, b: int, t: float) -> int:
@@ -77,6 +86,9 @@ from trezor.ui.style import *  # isort:skip # noqa: F401,F403
 
 
 def pulse(period: int, offset: int = 0) -> float:
+    if __debug__:
+        if utils.DISABLE_FADE:
+            return 0.5
     # normalize sin from interval -1:1 to 0:1
     return 0.5 + 0.5 * math.sin(2 * math.pi * (utime.ticks_us() + offset) / period)
 
@@ -346,7 +358,7 @@ class Layout(Component):
         # Display is usually refreshed after every loop step, but here we are
         # rendering everything synchronously, so refresh it manually and turn
         # the brightness on again.
-        display.refresh()
+        refresh()
         backlight_fade(style.BACKLIGHT_NORMAL)
         sleep = loop.sleep(_RENDER_DELAY_US)
         while True:
