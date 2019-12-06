@@ -22,6 +22,7 @@ from trezorlib.tools import parse_path
 from ..common import MNEMONIC12
 
 
+@pytest.mark.altcoin
 @pytest.mark.ontology
 @pytest.mark.skip_t1
 class TestMsgOntologyGetaddress:
