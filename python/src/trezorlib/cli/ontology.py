@@ -176,14 +176,14 @@ def sign_ont_id_register(connect, address, transaction, register):
     help="Add attributes in JSON format",
 )
 @click.pass_obj
-def sign_ont_id_add_attributes(connect, address, transaction, add_attr):
+def sign_ont_id_add_attributes(connect, address, transaction, add_attribute):
     client = connect()
     address_n = tools.parse_path(address)
     transaction = protobuf.dict_to_proto(
         messages.OntologyTransaction, json.load(transaction)
     )
     ont_id_add_attributes = protobuf.dict_to_proto(
-        messages.OntologyOntIdAddAttributes, json.load(add_attr)
+        messages.OntologyOntIdAddAttributes, json.load(add_attribute)
     )
     result = ontology.sign_add_attr(
         client, address_n, transaction, ont_id_add_attributes
