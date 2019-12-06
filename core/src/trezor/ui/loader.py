@@ -108,7 +108,8 @@ class LoadingAnimation(ui.Layout):
         self.loader.dispatch(event, x, y)
 
         if __debug__:
-            if utils.DISABLE_FADE:
+            import apps.debug
+            if utils.DISABLE_FADE or apps.debug.save_screen:  # TODO?
                 self.on_finish()
 
     def on_finish(self) -> None:
