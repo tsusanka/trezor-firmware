@@ -24,41 +24,41 @@ from trezorlib.tools import parse_path
 from ..common import MNEMONIC12
 
 
+@pytest.mark.altcoin
 @pytest.mark.ontology
 @pytest.mark.skip_t1
 @pytest.mark.skip(reason="bad testing data")
-class TestMsgOntologySignOntIdRegister:
-    @pytest.mark.setup_client(mnemonic=MNEMONIC12)
-    def test_ontology_sign_ont_id_register(self, client):
-        client.set_input_flow(input_flow(client, num_pages=2))
-        transaction = messages.OntologyTransaction(
-            version=0x00,
-            nonce=0x7F7F1CEB,
-            type=0xD1,
-            gas_price=500,
-            gas_limit=30000,
-            payer="AGn8JFPGM5S4jkWhTC89Xtz1Y76sPz29Rc",
-            tx_attributes=[],
-        )
+@pytest.mark.setup_client(mnemonic=MNEMONIC12)
+def test_ontology_sign_ont_id_register(client):
+    client.set_input_flow(input_flow(client, num_pages=2))
+    transaction = messages.OntologyTransaction(
+        version=0x00,
+        nonce=0x7F7F1CEB,
+        type=0xD1,
+        gas_price=500,
+        gas_limit=30000,
+        payer="AGn8JFPGM5S4jkWhTC89Xtz1Y76sPz29Rc",
+        tx_attributes=[],
+    )
 
-        ont_id_register = messages.OntologyOntIdRegister(
-            ont_id="did:ont:AGVn4NZNEQ7RawHTDxjaTjZ3R8h8q1aq9h",
-            public_key=bytes.fromhex(
-                "03a8269b0dad311d98195e76729bc57003348a315fd17b6bf4f90ba8b86735fa33"
-            ),
-        )
+    ont_id_register = messages.OntologyOntIdRegister(
+        ont_id="did:ont:AGVn4NZNEQ7RawHTDxjaTjZ3R8h8q1aq9h",
+        public_key=bytes.fromhex(
+            "03a8269b0dad311d98195e76729bc57003348a315fd17b6bf4f90ba8b86735fa33"
+        ),
+    )
 
-        signature = ontology.sign_add_attr(
-            client, parse_path("m/44'/1024'/0'/0/0"), transaction, ont_id_register
-        )
-        assert (
-            signature.payload.hex()
-            == "9800c66b2a6469643a6f6e743a4147566e344e5a4e455137526177485444786a61546a5a33523868387131617139686a7cc82103a8269b0dad311d98195e76729bc57003348a315fd17b6bf4f90ba8b86735fa336a7cc86c127265674944576974685075626c69634b65791400000000000000000000000000000000000000030068164f6e746f6c6f67792e4e61746976652e496e766f6b65"
-        )
-        assert (
-            signature.signature.hex()
-            == "015d6abe231352d1ab32f0b0de0222cfb9a7a13f467a2bf8a369b61aa1f933dc3a6a2ba7831c8a15984fe0958d24cbca05d8e0736510c1734d773145ce3eac9e9b"
-        )
+    signature = ontology.sign_add_attr(
+        client, parse_path("m/44'/1024'/0'/0/0"), transaction, ont_id_register
+    )
+    assert (
+        signature.payload.hex()
+        == "9800c66b2a6469643a6f6e743a4147566e344e5a4e455137526177485444786a61546a5a33523868387131617139686a7cc82103a8269b0dad311d98195e76729bc57003348a315fd17b6bf4f90ba8b86735fa336a7cc86c127265674944576974685075626c69634b65791400000000000000000000000000000000000000030068164f6e746f6c6f67792e4e61746976652e496e766f6b65"
+    )
+    assert (
+        signature.signature.hex()
+        == "015d6abe231352d1ab32f0b0de0222cfb9a7a13f467a2bf8a369b61aa1f933dc3a6a2ba7831c8a15984fe0958d24cbca05d8e0736510c1734d773145ce3eac9e9b"
+    )
 
 
 def input_flow(client, num_pages):
