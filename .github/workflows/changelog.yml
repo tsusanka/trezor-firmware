@@ -1,0 +1,15 @@
+name: "Changelog Reminder"
+on: pull_request
+jobs:
+  remind:
+    name: Changelog Reminder
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Changelog Reminder
+      uses: peterjgrainger/action-changelog-reminder@v1.2.0
+      with:
+        changelog_regex: '/change_log\/.*\/*.yml'
+        customPrMessage: 'You have not modified the Changelog. Are you sure?'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
