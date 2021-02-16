@@ -1,15 +1,11 @@
-name: "Check fixup commits"
-on:
-  pull_request:
-    types: [opened, synchronize, reopened, ready_for_review]
+name: Git Checks
+
+on: [pull_request]
 
 jobs:
-  # Enforces the update of a changelog file on every pull request
-  changelog:
+  block-fixup:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-    - name: Check fixup commits
-      run: ci/check_fixup.sh
+    - uses: actions/checkout@v2.0.0
+    - name: Block Fixup Commit Merge
+      uses: 13rac1/block-fixup-merge-action@v2.0.0
