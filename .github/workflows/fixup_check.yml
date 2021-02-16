@@ -1,0 +1,13 @@
+name: "Check fixup commits"
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+jobs:
+  # Enforces the update of a changelog file on every pull request
+  changelog:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Check fixup commits
+      run: ci/check_fixup.sh
