@@ -8,6 +8,5 @@ jobs:
   changelog:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
     - name: Check fixup commits
       run: ci/check_fixup.sh
